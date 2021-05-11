@@ -172,9 +172,10 @@ public drop(args: IDropEventArgs) {
       };
       this.diagram.add(connector);
       console.log(connector)
-    } else {
-      alert("Node does not dropped on other node!!!!");
-    }
+    } 
+    // else {
+    //   alert("Node does not dropped on other node!!!!");
+    // }
   }
 }
  }
