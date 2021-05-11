@@ -22,9 +22,8 @@
     height="580px"
     [getNodeDefaults]="nodeDefaults"
     [getConnectorDefaults]="connDefaults"
-    (click)="click($event)"
+    (historyChange)="historyChange($event)"
     (drop)="drop($event)"
-    (propertyChange)="valuechange($event)"
   >
   </ejs-diagram>
 </div>

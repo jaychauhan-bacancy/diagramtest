@@ -22,6 +22,7 @@ import {
   Annotation,
   ShapeAnnotationModel,
   PathAnnotationModel,
+  IHistoryChangeArgs,
 } from '@syncfusion/ej2-angular-diagrams';
 import { ExpandMode } from '@syncfusion/ej2-navigations';
 
@@ -128,35 +129,6 @@ export class AppComponent {
       symbol.height = 50;
     }
   }
-  valuechange($event: any) {
-    var nodeList: nodeModel[] = [];
-    var connectorList: connectorModel[] = [];
-
-    this.diagram.nodes.forEach((element) => {
-      const nodeData: nodeModel = {
-        id: element.id,
-        height: element.height,
-        width: element.width,
-        offsetX: element.offsetX,
-        offsetY: element.offsetY,
-      };
-      nodeList.push(nodeData);
-    });
-
-    this.diagram.connectors.forEach((element) => {
-      const connectorData: connectorModel = {
-        id: element.id,
-        sourceId: element.sourceID,
-        targetId: element.targetID,
-      };
-      connectorList.push(connectorData);
-    });
-
-    this.diagramData = {
-      nodes: nodeList,
-      connectors: connectorList,
-    };
-  }
   public drop(args: IDropEventArgs) {
     if (args.element instanceof Node && this.diagram.nodes.length > 0) {
       if (args.element.id !== (args.target as NodeModel).id) {
@@ -186,7 +158,34 @@ export class AppComponent {
       }
     }
   }
-  public click(args: IClickEventArgs): void {
+  public historyChange(args: IHistoryChangeArgs): void {
+    var nodeList: nodeModel[] = [];
+    var connectorList: connectorModel[] = [];
+
+    this.diagram.nodes.forEach((element) => {
+      const nodeData: nodeModel = {
+        id: element.id,
+        height: element.height,
+        width: element.width,
+        offsetX: element.offsetX,
+        offsetY: element.offsetY,
+      };
+      nodeList.push(nodeData);
+    });
+
+    this.diagram.connectors.forEach((element) => {
+      const connectorData: connectorModel = {
+        id: element.id,
+        sourceId: element.sourceID,
+        targetId: element.targetID,
+      };
+      connectorList.push(connectorData);
+    });
+
+    this.diagramData = {
+      nodes: nodeList,
+      connectors: connectorList,
+    };
     console.log(this.diagramData);
   }
 }
