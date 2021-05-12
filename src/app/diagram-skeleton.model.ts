@@ -8,9 +8,11 @@ export interface nodeModel {
   offsetY: number;
   height: number;
   width: number;
+  title?: string;
 }
 export interface connectorModel {
   id: string;
   sourceId: string;
   targetId: string;
+  title?: string;
 }

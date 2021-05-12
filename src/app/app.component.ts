@@ -23,6 +23,7 @@ import {
   ShapeAnnotationModel,
   PathAnnotationModel,
   IHistoryChangeArgs,
+  AnnotationConstraints,
 } from '@syncfusion/ej2-angular-diagrams';
 import { ExpandMode } from '@syncfusion/ej2-navigations';
 
@@ -43,6 +44,7 @@ export class AppComponent {
   public pathannotations: PathAnnotationModel[];
   public diagramData: DiagramSkeleton;
   public expandMode: ExpandMode = 'Multiple';
+
   @ViewChild('diagram')
   public diagram: DiagramComponent;
 
@@ -165,6 +167,7 @@ export class AppComponent {
     this.diagram.nodes.forEach((element) => {
       const nodeData: nodeModel = {
         id: element.id,
+        title: element.annotations[0] ? element.annotations[0].content : '',
         height: element.height,
         width: element.width,
         offsetX: element.offsetX,
@@ -176,6 +179,7 @@ export class AppComponent {
     this.diagram.connectors.forEach((element) => {
       const connectorData: connectorModel = {
         id: element.id,
+        title: element.annotations[0] ? element.annotations[0].content : '',
         sourceId: element.sourceID,
         targetId: element.targetID,
       };
