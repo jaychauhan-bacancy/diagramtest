@@ -1,3 +1,5 @@
+import { ShapeAnnotationModel } from '@syncfusion/ej2-diagrams';
+
 export interface DiagramSkeleton {
   nodes: nodeModel[];
   connectors: connectorModel[];
@@ -14,5 +16,5 @@ export interface connectorModel {
   id: string;
   sourceId: string;
   targetId: string;
-  title?: string;
+  title: string;
 }

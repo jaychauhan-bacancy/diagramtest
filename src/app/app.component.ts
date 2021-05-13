@@ -24,6 +24,9 @@ import {
   PathAnnotationModel,
   IHistoryChangeArgs,
   AnnotationConstraints,
+  ITextEditEventArgs,
+  IPropertyChangeEventArgs,
+  ShapeAnnotation,
 } from '@syncfusion/ej2-angular-diagrams';
 import { ExpandMode } from '@syncfusion/ej2-navigations';
 
@@ -37,6 +40,7 @@ Diagram.Inject(UndoRedo);
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
   title = 'diagramtest';
@@ -145,6 +149,7 @@ export class AppComponent {
           shape: args.element.shape,
           height: 75,
           width: 75,
+          annotations: args.element.annotations,
           constraints: NodeConstraints.Default | NodeConstraints.AllowDrop,
         };
         this.diagram.add(newNode);
@@ -160,36 +165,38 @@ export class AppComponent {
       }
     }
   }
-  public historyChange(args: IHistoryChangeArgs): void {
-    var nodeList: nodeModel[] = [];
-    var connectorList: connectorModel[] = [];
 
-    this.diagram.nodes.forEach((element) => {
-      const nodeData: nodeModel = {
-        id: element.id,
-        title: element.annotations[0] ? element.annotations[0].content : '',
-        height: element.height,
-        width: element.width,
-        offsetX: element.offsetX,
-        offsetY: element.offsetY,
+  public historyChange(args: IPropertyChangeEventArgs): void {
+    setTimeout(() => {
+      var nodeList: nodeModel[] = [];
+      var connectorList: connectorModel[] = [];
+      this.diagram.nodes.forEach((element) => {
+        const nodeData: nodeModel = {
+          id: element.id,
+          title: element.annotations[0] ? element.annotations[0].content : '',
+          height: element.height,
+          width: element.width,
+          offsetX: element.offsetX,
+          offsetY: element.offsetY,
+        };
+        nodeList.push(nodeData);
+      });
+      this.diagram.connectors.forEach((element) => {
+        const connectorData: connectorModel = {
+          id: element.id,
+          title: element.annotations[0] ? element.annotations[0].content : '',
+          sourceId: element.sourceID,
+          targetId: element.targetID,
+        };
+        connectorList.push(connectorData);
+      });
+
+      this.diagramData = {
+        nodes: nodeList,
+        connectors: connectorList,
       };
-      nodeList.push(nodeData);
-    });
 
-    this.diagram.connectors.forEach((element) => {
-      const connectorData: connectorModel = {
-        id: element.id,
-        title: element.annotations[0] ? element.annotations[0].content : '',
-        sourceId: element.sourceID,
-        targetId: element.targetID,
-      };
-      connectorList.push(connectorData);
-    });
-
-    this.diagramData = {
-      nodes: nodeList,
-      connectors: connectorList,
-    };
-    console.log(this.diagramData);
+      console.log(this.diagramData);
+    }, 0.00000000001);
   }
 }
